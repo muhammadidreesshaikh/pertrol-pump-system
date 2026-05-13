@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -16,6 +17,8 @@ import {
   Typography,
   Paper,
   Chip,
+  useTheme,
+  alpha,
 } from "@mui/material";
 import * as MuiIcons from "@mui/icons-material";
 import { useState } from "react";
@@ -60,6 +63,7 @@ const samplePumps = [
 ];
 
 export default function PetrolPumpListPage() {
+  const theme = useTheme();
   const [pumps, setPumps] = useState(samplePumps);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -169,30 +173,47 @@ export default function PetrolPumpListPage() {
   return (
     <Box sx={{ py: 3 }}>
       {/* Header */}
-      <Box
+      <Paper
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 3,
+          mb: 4,
+          p: { xs: 2.5, md: 3.5 },
+          background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.12)} 0%, ${alpha(theme.palette.secondary.main, 0.08)} 45%, ${alpha(theme.palette.info.main, 0.08)} 100%)`,
         }}
       >
-        <div>
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            Petrol Pump Management
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            Manage and monitor all petrol pumps
-          </Typography>
-        </div>
-        <Button
-          variant="contained"
-          startIcon={<MuiIcons.Add />}
-          onClick={() => handleOpenDialog()}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+          alignItems={{ xs: "flex-start", md: "center" }}
+          justifyContent="space-between"
         >
-          Add Pump
-        </Button>
-      </Box>
+          <Box>
+            <Chip label="Network Operations" sx={{ mb: 2, fontWeight: 800 }} />
+            <Typography
+              variant="h4"
+              sx={{ fontWeight: 800, letterSpacing: "-0.03em" }}
+            >
+              Petrol Pumps
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              Manage petrol pump locations, monitor stock levels, and keep
+              operations running smoothly.
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            startIcon={<MuiIcons.Add />}
+            onClick={() => handleOpenDialog()}
+            sx={{
+              textTransform: "none",
+              fontWeight: 700,
+              px: 3,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.info.main} 100%)`,
+            }}
+          >
+            Add Pump
+          </Button>
+        </Stack>
+      </Paper>
 
       {/* Search Box */}
       <Paper sx={{ p: 2, mb: 3 }}>

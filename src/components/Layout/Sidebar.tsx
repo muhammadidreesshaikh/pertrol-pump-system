@@ -7,7 +7,6 @@ import {
   ListItemText,
   Box,
   Typography,
-  Chip,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
@@ -84,11 +83,11 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
         >
           FuelHub
         </Typography>
-        <Chip
+        {/* <Chip
           size="small"
           label="Operations Suite"
           sx={{ mt: 1.25, fontWeight: 700 }}
-        />
+        /> */}
       </Box>
 
       {/* Navigation Items */}
@@ -105,9 +104,9 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
                 onClick={() => handleNavigate(item.path)}
                 selected={isActive}
                 sx={{
-                  borderRadius: 3,
                   px: 1.6,
                   py: 1.25,
+                  borderRadius: 0,
                   backgroundColor: isActive
                     ? `${theme.palette.primary.main}14`
                     : "transparent",
@@ -176,6 +175,7 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
             boxSizing: "border-box",
             display: { xs: "none", md: "flex" },
             borderRight: `1px solid ${theme.palette.divider}`,
+            boxShadow: `0 8px 24px ${theme.palette.primary.main}1a`,
           },
         }}
       >
@@ -193,6 +193,7 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
             width: DRAWER_WIDTH,
             boxSizing: "border-box",
             borderRight: `1px solid ${theme.palette.divider}`,
+            boxShadow: `0 8px 24px ${theme.palette.primary.main}1a`,
           },
         }}
       >

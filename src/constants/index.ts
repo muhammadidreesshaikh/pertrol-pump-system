@@ -94,7 +94,7 @@ export const NAVIGATION_ITEMS = [
   {
     id: "fuel-purchase",
     label: "Fuel Purchase",
-    path: "/fuel-purchase",
+    path: "/fuel-purchases",
     icon: "shopping_cart",
     permission: ["ADMIN", "MANAGER"],
   },
@@ -115,7 +115,7 @@ export const NAVIGATION_ITEMS = [
   {
     id: "delivery",
     label: "Delivery Management",
-    path: "/delivery",
+    path: "/deliveries",
     icon: "local_shipping",
     permission: ["ADMIN", "MANAGER", "ACCOUNTANT"],
   },

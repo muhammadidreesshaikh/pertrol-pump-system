@@ -10,19 +10,25 @@ import {
   Link,
   Stack,
   Chip,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import * as MuiIcons from "@mui/icons-material";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
+import { authService } from "@services/authService";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { login, loading, error, clearError } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const demoCredentials = useMemo(() => authService.getDemoCredentials(), []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -265,11 +271,12 @@ export const LoginPage = () => {
                   fullWidth
                   label="Password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleChange}
                   margin="normal"
                   required
+                  autoComplete="current-password"
                   sx={{
                     "& .MuiInputLabel-root": { color: "#94a3b8" },
                     "& .MuiInputLabel-root.Mui-focused": { color: "#60a5fa" },
@@ -285,6 +292,26 @@ export const LoginPage = () => {
                       "&.Mui-focused fieldset": { borderColor: "#60a5fa" },
                     },
                     "& .MuiFormHelperText-root": { color: "#94a3b8" },
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          edge="end"
+                          aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                          }
+                          sx={{ color: "#94a3b8" }}
+                        >
+                          {showPassword ? (
+                            <MuiIcons.VisibilityOff />
+                          ) : (
+                            <MuiIcons.Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                 />
 
@@ -338,15 +365,17 @@ export const LoginPage = () => {
                 >
                   Demo Credentials
                 </Typography>
-                <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                  <strong>Admin:</strong> admin@fuelhub.com / password
-                </Typography>
-                <Typography variant="caption" display="block">
-                  <strong>Manager:</strong> manager@fuelhub.com / password
-                </Typography>
-                <Typography variant="caption" display="block">
-                  <strong>Accountant:</strong> accountant@fuelhub.com / password
-                </Typography>
+                {demoCredentials.map((credential) => (
+                  <Typography
+                    key={credential.email}
+                    variant="caption"
+                    display="block"
+                    sx={{ mt: 1 }}
+                  >
+                    <strong>{credential.name}:</strong> {credential.email} /{" "}
+                    {credential.password}
+                  </Typography>
+                ))}
               </Paper>
             </Box>
           </Box>

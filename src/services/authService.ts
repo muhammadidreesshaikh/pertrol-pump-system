@@ -2,6 +2,52 @@ import { apiClient } from "./apiClient";
 import { User, UserRole } from "@/types";
 import { STORAGE_KEYS } from "@constants/index";
 
+const DEMO_USERS: Record<
+  string,
+  {
+    password: string;
+    user: User;
+    token: string;
+  }
+> = {
+  "admin@fuelhub.com": {
+    password: "password",
+    token: "demo-admin-token",
+    user: {
+      id: "demo-admin",
+      email: "admin@fuelhub.com",
+      name: "Admin User",
+      role: UserRole.ADMIN,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+  },
+  "manager@fuelhub.com": {
+    password: "password",
+    token: "demo-manager-token",
+    user: {
+      id: "demo-manager",
+      email: "manager@fuelhub.com",
+      name: "Manager User",
+      role: UserRole.MANAGER,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+  },
+  "accountant@fuelhub.com": {
+    password: "password",
+    token: "demo-accountant-token",
+    user: {
+      id: "demo-accountant",
+      email: "accountant@fuelhub.com",
+      name: "Accountant User",
+      role: UserRole.ACCOUNTANT,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+  },
+};
+
 const ENDPOINTS = {
   AUTH: "/auth",
   LOGIN: "/auth/login",
@@ -15,6 +61,18 @@ const ENDPOINTS = {
 
 export const authService = {
   async login(email: string, password: string) {
+    const normalizedEmail = email.trim().toLowerCase();
+    const demoAccount = DEMO_USERS[normalizedEmail];
+
+    if (demoAccount && demoAccount.password === password) {
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, demoAccount.token);
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(demoAccount.user));
+      return {
+        user: demoAccount.user,
+        token: demoAccount.token,
+      };
+    }
+
     const response = await apiClient.post<{ user: User; token: string }>(
       ENDPOINTS.LOGIN,
       {
@@ -82,5 +140,14 @@ export const authService = {
 
   isAuthenticated(): boolean {
     return !!this.getStoredToken();
+  },
+
+  getDemoCredentials() {
+    return Object.values(DEMO_USERS).map(({ user, password }) => ({
+      email: user.email,
+      password,
+      role: user.role,
+      name: user.name,
+    }));
   },
 };

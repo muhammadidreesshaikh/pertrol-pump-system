@@ -55,6 +55,8 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
         zIndex: (theme) => theme.zIndex.drawer + 1,
         ml: { md: 260 },
         width: { md: "calc(100% - 260px)" },
+        boxShadow: (theme) =>
+          `0 8px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
         backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.72),
         borderBottom: (theme) =>
           `1px solid ${alpha(theme.palette.divider, 0.8)}`,
@@ -76,7 +78,8 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
             onClick={onMenuClick}
             sx={{
               display: { xs: "flex", md: "none" },
-              backgroundColor: "rgba(37, 99, 235, 0.08)",
+              borderRadius: 0,
+              backgroundColor: "rgba(13, 62, 167, 0.08)",
               "&:hover": { backgroundColor: "rgba(37, 99, 235, 0.14)" },
             }}
           >
@@ -107,7 +110,7 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
               gap: 1,
               px: 1.5,
               py: 0.75,
-              borderRadius: 999,
+              borderRadius: 0,
               backgroundColor: (theme) =>
                 alpha(theme.palette.primary.main, 0.08),
               border: (theme) =>
@@ -133,6 +136,7 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
             color="inherit"
             sx={{
               position: "relative",
+              borderRadius: 0,
               backgroundColor: "rgba(37, 99, 235, 0.08)",
               "&:hover": { backgroundColor: "rgba(37, 99, 235, 0.14)" },
             }}
@@ -146,7 +150,7 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
                 width: 9,
                 height: 9,
                 background: "linear-gradient(135deg, #ef4444 0%, #f59e0b 100%)",
-                borderRadius: "50%",
+                borderRadius: 0,
                 boxShadow: "0 0 0 3px rgba(255,255,255,0.7)",
               }}
             />
@@ -157,7 +161,7 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
             sx={{
               p: 0,
               ml: 0.25,
-              borderRadius: 999,
+              borderRadius: 0,
             }}
           >
             <Avatar
@@ -187,6 +191,7 @@ export const TopBar = ({ onMenuClick }: TopBarProps) => {
                 mt: 1.25,
                 minWidth: 240,
                 p: 1,
+                borderRadius: 0,
               },
             }}
           >
